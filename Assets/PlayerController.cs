@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public GameObject groundChecker;
+    public LayerMask whatIsGround;
+    
+    float maxSpeed = 5.0f;
+    bool isOnGround = false;
+   
+    
     Rigidbody2D playerObject;
   
     // Start is called before the first frame update
@@ -18,8 +25,9 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         float movementValueX = Input.GetAxis("Horizontal");
+       
+       playerObject.velocity = new Vector2 (movementValueX*maxSpeed, playerObject.velocity.y);
 
-
-        playerObject.velocity = new Vector2 (movementValueX, playerObject.velocity.y);
+        isOnGround = Physics2D.OverlapCircle(groundChecker.transform.position, 1.0f, whatIsGround);
     }
 }
